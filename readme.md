@@ -50,28 +50,5 @@ The resulting application will be located in `dist/DaemonWatch.app`.
 
 ---
 
-## 📦 How to Deploy (GitHub Release)
-
-To share this app with others or keep a versioned binary on GitHub:
-
-1.  **Zip the App**: macOS `.app` bundles are actually directories. You must zip them before uploading.
-    ```bash
-    cd dist
-    zip -r DaemonWatch.zip DaemonWatch.app
-    ```
-2.  **Create a Tag**:
-    ```bash
-    git tag -a v1.0.0 -m "Initial release"
-    git push origin v1.0.0
-    ```
-3.  **GitHub Release**:
-    - Go to your repository on GitHub.
-    - Click on **Releases** > **Draft a new release**.
-    - Select the tag `v1.0.0`.
-    - Drag and drop the `DaemonWatch.zip` into the binary attachments area.
-    - Publish the release.
-
----
-
 ## 📄 License
 This project is licensed under the MIT License - see the LICENSE file for details.
