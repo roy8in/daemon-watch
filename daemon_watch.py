@@ -9,9 +9,9 @@ import rumps
 from cron_descriptor import get_description
 
 
-class BackWatchApp(rumps.App):
+class DaemonWatchApp(rumps.App):
     def __init__(self):
-        super(BackWatchApp, self).__init__("BW")
+        super(DaemonWatchApp, self).__init__("DW")
         self.env = os.environ.copy()
         self.env['PATH'] = '/usr/local/bin:/opt/homebrew/bin:' + \
                            self.env.get('PATH', '')
@@ -202,7 +202,7 @@ class BackWatchApp(rumps.App):
     def run_cron_now(self, job, _):
         subprocess.Popen(job['command'], shell=True, env=self.env)
         rumps.notification(
-            "BackWatch", 
+            "Daemon Watch", 
             "Cron Job Triggered", 
             f"Executed: {job['label']}"
         )
@@ -218,4 +218,4 @@ class BackWatchApp(rumps.App):
 
 
 if __name__ == "__main__":
-    BackWatchApp().run()
+    DaemonWatchApp().run()

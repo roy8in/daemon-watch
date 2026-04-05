@@ -6,6 +6,11 @@ OPTIONS = {
     'argv_emulation': True,
     'plist': {
         'LSUIElement': True,
+        'CFBundleName': 'DaemonWatch',
+        'CFBundleDisplayName': 'Daemon Watch',
+        'CFBundleIdentifier': "com.local.osx.daemonwatch",
+        'CFBundleVersion': "1.0.0",
+        'CFBundleShortVersionString': "1.0.0",
     },
     'packages': ['rumps', 'cron_descriptor'],
 }
