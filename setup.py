@@ -3,14 +3,14 @@ from setuptools import setup
 APP = ['daemon_watch.py']
 DATA_FILES = []
 OPTIONS = {
-    'argv_emulation': True,
+    'argv_emulation': False,
     'plist': {
         'LSUIElement': True,
         'CFBundleName': 'DaemonWatch',
         'CFBundleDisplayName': 'Daemon Watch',
         'CFBundleIdentifier': "com.local.osx.daemonwatch",
-        'CFBundleVersion': "1.0.0",
-        'CFBundleShortVersionString': "1.0.0",
+        'CFBundleVersion': "1.0.1",
+        'CFBundleShortVersionString': "1.0.1",
     },
     'packages': ['rumps', 'cron_descriptor'],
 }
