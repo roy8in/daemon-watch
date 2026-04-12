@@ -20,9 +20,47 @@ class DaemonWatchApp(rumps.App):
     def __init__(self):
         logger.debug("Initializing DaemonWatchApp")
         super(DaemonWatchApp, self).__init__("DW")
+        
+        # Build environment with more robust PATH discovery
         self.env = os.environ.copy()
-        self.env['PATH'] = '/usr/local/bin:/opt/homebrew/bin:' + \
-                           self.env.get('PATH', '')
+        
+        # Try to fetch login shell's PATH
+        try:
+            shell_path = subprocess.check_output(
+                ['/usr/bin/zsh', '-l', '-c', 'echo $PATH'], 
+                text=True, stderr=subprocess.DEVNULL
+            ).strip()
+            if shell_path:
+                self.env['PATH'] = shell_path
+        except Exception as e:
+            logger.error(f"Failed to fetch shell PATH: {e}")
+
+        # Add common locations as fallbacks
+        home = os.path.expanduser("~")
+        common_paths = [
+            "/usr/local/bin",
+            "/opt/homebrew/bin",
+            f"{home}/.nvm/versions/node/*/bin",
+            f"{home}/.npm-global/bin",
+            f"{home}/bin",
+            "/usr/bin",
+            "/bin",
+            "/usr/sbin",
+            "/sbin"
+        ]
+        
+        # Resolve glob patterns (like nvm path) and join
+        import glob
+        resolved_paths = []
+        for p in common_paths:
+            if '*' in p:
+                resolved_paths.extend(glob.glob(p))
+            else:
+                resolved_paths.append(p)
+                
+        existing_path = self.env.get('PATH', '')
+        self.env['PATH'] = ":".join(resolved_paths) + (":" + existing_path if existing_path else "")
+        logger.debug(f"Computed PATH: {self.env['PATH']}")
         
         self.update_timer = rumps.Timer(self.update_data, 60)
         self.update_timer.start()

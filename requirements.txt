@@ -1,3 +1,55 @@
-rumps==0.4.0
-cron-descriptor==1.4.0
-py2app==0.28.6
+# Daemon Watch (DW)
+
+Daemon Watch is a lightweight macOS menu bar application designed to monitor and manage your background processes (Cron) and Node.js applications (PM2) in real-time.
+
+## 🚀 Features
+
+### 🕒 Cron Management
+- **List Jobs**: Parses your `crontab -l` and displays all scheduled tasks.
+- **Human-Readable**: Converts cryptic cron expressions (e.g., `0 2 * * *`) into clear English (e.g., "At 02:00 AM").
+- **Custom Labeling**: Add or edit names for your cron jobs. Labels are persisted using `# NAME:` comments in your crontab.
+- **Toggle Control**: Enable or disable jobs directly from the menu bar.
+- **Run Now**: Trigger any cron job immediately without waiting for the next scheduled time.
+
+### 🟢 PM2 Management
+- **Process List**: View all PM2 processes with real-time CPU and Memory usage.
+- **Status Indicators**: Quickly see if processes are Online, Stopped, or Errored.
+- **Full Control**: Start, Stop, or Restart processes with a single click.
+- **Logs**: View the last 10 lines of logs for any PM2 process in your terminal.
+- **Robust Path Discovery**: Automatically finds PM2 executables in standard locations and through NVM.
+
+---
+
+## 🛠 Installation & Build
+
+### 1. Prerequisites
+- Python 3.10+ (Tested up to 3.14)
+- macOS (required for the menu bar functionality)
+- PM2 (optional, for PM2 monitoring features)
+
+### 2. Setup Environment
+```bash
+# Clone the repository
+git clone https://github.com/roy8in/daemon-watch.git
+cd daemon-watch
+
+# Create and activate virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 3. Build the Application (.app)
+We use `py2app` to bundle the Python script into a native macOS application.
+```bash
+# Build the standalone app
+python setup.py py2app
+```
+The resulting application will be located in `dist/DaemonWatch.app`.
+
+---
+
+## 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
